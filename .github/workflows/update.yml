@@ -2,12 +2,15 @@ name: Daily Stock Update
 
 on:
   schedule:
-    - cron: '0 22 * * 1-5'  # runs 6pm EST every weekday
-  workflow_dispatch:          # also lets you run it manually
+    - cron: '0 13 * * 1-5'   # 9am EST (weekdays)
+    - cron: '0 23 * * 1-5'   # 7pm EST (weekdays)
+  workflow_dispatch:           # lets you run it manually anytime
 
 jobs:
   update:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
 
@@ -33,8 +36,7 @@ jobs:
 
       - name: Commit updated data
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
+          git config user.name "g          git config user.name "g          git config usgithub.com"
           git add data/
-          git commit -m "Daily update $(date +'%Y-%m-%d')" || echo "No changes"
+          git commit -m "Auto update $(date +'%Y-%m-%d %H:%M')" || echo "No changes"
           git push
