@@ -123,14 +123,29 @@ Be concise and factual. No fluff."""
 
 def auto_fetch_ticker(ticker):
     def run():
+        # Auto-classify industry
         industries = load_json(INDUSTRIES_FILE, {})
         if ticker not in industries:
             sector, color, _ = get_sector_from_yfinance(ticker)
             industries[ticker] = {"industry": sector, "color": color}
             save_json(INDUSTRIES_FILE, industries)
-        subprocess.run([sys.executable, "scripts/fetch_financials.py"], capture_output=True)
-        subprocess.run([sys.executable, "scripts/calculate_ratios.py"], capture_output=True)
-        subprocess.run([sys.executable, "scripts/score_stocks.py"],     capture_output=True)
+        # Run full pipeline so new ticker appears everywhere
+        for script in [
+            "scripts/fetch_financials.py",
+            "scripts/calculate_ratios.py",
+            "scripts/score_stocks.py",
+            "scripts/compare_ratios.py",
+        ]:
+            subprocess.run([sys.executable, script], capture_output=True)
+        # Push updated data to GitHub
+        try:
+            import git
+            repo = git.Repo(".")
+            repo.git.add("data/")
+            repo.index.commit(f"Auto-add {ticker} data")
+            repo.remotes.origin.push()
+        except:
+            pass
     threading.Thread(target=run, daemon=True).start()
 
 st.title("📈 Stock Tracker Dashboard")
