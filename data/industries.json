@@ -14,5 +14,9 @@
   "AMP": {
     "industry": "Financial Services",
     "color": "#2ECC71"
+  },
+  "AME": {
+    "industry": "Industrials",
+    "color": "#34495E"
   }
 }
