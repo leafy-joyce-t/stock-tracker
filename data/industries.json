@@ -2,5 +2,9 @@
   "JPM": {
     "industry": "Other",
     "color": "#3498DB"
+  },
+  "SOFI": {
+    "industry": "Financial Services",
+    "color": "#2ECC71"
   }
 }
