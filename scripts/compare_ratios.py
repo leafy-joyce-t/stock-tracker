@@ -5,7 +5,16 @@ import json
 import os
 from bs4 import BeautifulSoup
 
-WATCHLIST = ["RBLX", "HOOD", "META", "MSFT", "LMND", "NVDA", "SNDK", "MRNA", "NET", "AAPL"]
+import json as _json
+def _load_watchlist():
+    try:
+        wl = _json.load(open("data/watchlist.json"))
+        port = _json.load(open("data/portfolio.json")) if os.path.exists("data/portfolio.json") else []
+        port_tickers = [e["ticker"] for e in port]
+        return list(set(wl + port_tickers))
+    except:
+        return ["AAPL", "MSFT", "META", "NVDA"]
+WATCHLIST = _load_watchlist()
 HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
 
 NAME_MAP = {

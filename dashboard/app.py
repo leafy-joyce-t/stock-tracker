@@ -10,6 +10,30 @@ import sys
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 
+from dotenv import load_dotenv
+import git
+
+load_dotenv()
+
+def auto_push(message="Update portfolio"):
+    try:
+        token = os.environ.get("GITHUB_TOKEN")
+        repo  = git.Repo(".")
+        repo.git.add("data/")
+        repo.index.commit(message)
+        origin = repo.remotes.origin
+        url = origin.url
+        if "https://" in url and "@" not in url:
+            url = url.replace("https://", f"https://{token}@")
+            origin.set_url(url)
+        origin.push()
+        return True
+    except Exception as e:
+        if "nothing to commit" in str(e).lower():
+            return True
+        print(f"Push error: {e}")
+        return False
+
 st.set_page_config(page_title="Stock Tracker", layout="wide")
 
 PORTFOLIO_FILE  = "data/portfolio.json"
@@ -231,10 +255,12 @@ with tab1:
                     portfolio[si]["shares"] = round(e["shares"]-ss,4)
                     portfolio[si]["cost"]   = round(portfolio[si]["shares"]*e["buy_price"],2)
                 save_json(PORTFOLIO_FILE, portfolio)
+                auto_push("Sell position")
                 st.success(f"Sold. Proceeds: ${proceeds} | Gain: ${gain}"); st.rerun()
         with cr:
             if st.button("🗑️ Remove"):
                 portfolio.pop(si); save_json(PORTFOLIO_FILE, portfolio)
+                auto_push("Remove position")
                 st.success("Removed"); st.rerun()
 
     st.subheader("Add a position")
