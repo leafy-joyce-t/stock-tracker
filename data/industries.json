@@ -10,5 +10,9 @@
   "NKE": {
     "industry": "Consumer Cyclical",
     "color": "#E67E22"
+  },
+  "AMP": {
+    "industry": "Financial Services",
+    "color": "#2ECC71"
   }
 }
