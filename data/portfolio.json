@@ -1,0 +1,23 @@
+[
+  {
+    "ticker": "MSFT",
+    "shares": 5,
+    "buy_date": "2024-01-01",
+    "buy_price": 363.8,
+    "cost": 1819.0
+  },
+  {
+    "ticker": "NVDA",
+    "shares": 8,
+    "buy_date": "2024-01-01",
+    "buy_price": 48.14,
+    "cost": 385.12
+  },
+  {
+    "ticker": "META",
+    "shares": 6,
+    "buy_date": "2024-06-01",
+    "buy_price": 474.27,
+    "cost": 2845.62
+  }
+]
