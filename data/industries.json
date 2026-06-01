@@ -6,5 +6,9 @@
   "SOFI": {
     "industry": "Financial Services",
     "color": "#2ECC71"
+  },
+  "NKE": {
+    "industry": "Consumer Cyclical",
+    "color": "#E67E22"
   }
 }
