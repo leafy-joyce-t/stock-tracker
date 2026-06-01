@@ -22,5 +22,9 @@
   "AMGN": {
     "industry": "Healthcare",
     "color": "#1ABC9C"
+  },
+  "AWK": {
+    "industry": "Utilities",
+    "color": "#607D8B"
   }
 }
