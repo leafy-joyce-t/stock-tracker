@@ -18,5 +18,9 @@
   "AME": {
     "industry": "Industrials",
     "color": "#34495E"
+  },
+  "AMGN": {
+    "industry": "Healthcare",
+    "color": "#1ABC9C"
   }
 }
