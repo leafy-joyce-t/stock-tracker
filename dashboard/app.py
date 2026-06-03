@@ -34,20 +34,14 @@ def get_current_price(ticker):
     try:
         s = yf.Ticker(ticker)
         p = s.info.get("currentPrice")
-        if not p:
-                                                            nd(p, 2)
-    except:
-        return None
-
-def get_price_on_date(ticker, date_str):
-    try:
-        h = yf.Ticker(ticker).history(start=date_str, period="5d")
+        if p:
+            return round(float(p), 2)
+        h = s.history(period="1d")
         if not h.empty:
-            return round(h["Close"].iloc[0], 2)
+            return round(float(h["Close"].iloc[-1]), 2)
         return None
     except:
         return None
-
 def get_period_start(period):
     t = datetime.today()
     mapping = {
