@@ -203,6 +203,7 @@ T = {
     "market_cap": {"EN": "Market Cap", "ZH": "市值"},
     "employees": {"EN": "Employees", "ZH": "员工数"},
     "news_tab": {"EN": "News", "ZH": "新闻"},
+    "screener": {"EN": "Screener", "ZH": "筛选器"},
     "company_tab": {"EN": "Company Info", "ZH": "公司信息"},
     "owned": {"EN": "Owned", "ZH": "已持有"},
     "score": {"EN": "Score", "ZH": "评分"},
@@ -220,9 +221,8 @@ def t(key):
     return T.get(key, {}).get(lang, key)
 
 
-
 tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
-    t("portfolio"), t("scores"), t("discover"), t("ratios"), t("news"), "🔍 Screener"
+    "Portfolio", "Stock Scores", "Discover & Watchlist", "Ratio Analysis", "News & Company Info", "Screener"
 ])
 
 with tab1:
