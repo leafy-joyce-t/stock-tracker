@@ -140,4 +140,4 @@ Streamlit lets you build a functional, interactive data UI in a fraction of the 
 
 ---
 
-*Built by Eli — June 2026*
+*Built by Joyce — June 2026*
