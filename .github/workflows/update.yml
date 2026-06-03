@@ -25,6 +25,9 @@ jobs:
       - name: Fetch financials
         run: python scripts/fetch_financials.py
 
+      - name: Risk signals
+        run: python scripts/risk_signals.py
+
       - name: Calculate ratios
         run: python scripts/calculate_ratios.py
 
@@ -33,6 +36,9 @@ jobs:
 
       - name: Compare ratios
         run: python scripts/compare_ratios.py
+
+      - name: Run screener
+        run: python scripts/screener.py
 
       - name: Commit updated data
         run: |
