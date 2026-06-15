@@ -34,5 +34,9 @@
   "GOOGL": {
     "industry": "Communication Services",
     "color": "#9B59B6"
+  },
+  "NBIS": {
+    "industry": "Communication Services",
+    "color": "#9B59B6"
   }
 }
