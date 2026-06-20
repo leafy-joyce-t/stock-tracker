@@ -38,5 +38,9 @@
   "NBIS": {
     "industry": "Communication Services",
     "color": "#9B59B6"
+  },
+  "LYFT": {
+    "industry": "Technology",
+    "color": "#3498DB"
   }
 }
