@@ -348,21 +348,43 @@ with tab1:
 with tab2:
     st.subheader("Stock Scores & Ratings")
     industries = load_json(INDUSTRIES_FILE, {})
-    try:
-        scores = pd.read_csv("data/scores.csv")
-        for _, row in scores.iterrows():
-            t    = row["ticker"]
-            ind  = industries.get(t, {})
-            col  = ind.get("color", "#95A5A6")
-            icon = "🟢" if row["rating"] in ["STRONG BUY","BUY"] else "🟡" if row["rating"]=="WATCH" else "🔴"
-            label = icon+" "+t+"  —  "+row["rating"]+"  —  Score: "+str(row["score"])+"/85  —  $"+str(row["price"])
-            with st.expander(label):
-                st.markdown("<span style=\'background:"+col+";padding:2px 10px;border-radius:12px;color:white;font-size:12px\'>"+ind.get("industry","Other")+"</span>", unsafe_allow_html=True)
-                st.write("")
-                for reason in str(row.get("reasons","")).split(" | "):
-                    st.write("• "+reason)
-    except FileNotFoundError:
-        st.warning("Run score_stocks.py first")
+
+    score_mode = st.radio("Scoring mode", ["Value / Stability", "Growth / Momentum"], horizontal=True)
+
+    if score_mode == "Value / Stability":
+        try:
+            scores = pd.read_csv("data/scores.csv")
+            for _, row in scores.iterrows():
+                t    = row["ticker"]
+                ind  = industries.get(t, {})
+                col  = ind.get("color", "#95A5A6")
+                icon = "🟢" if row["rating"] in ["STRONG BUY","BUY"] else "🟡" if row["rating"]=="WATCH" else "🔴"
+                live_price = get_current_price(t) or row["price"]
+                label = icon+" "+t+"  —  "+row["rating"]+"  —  Score: "+str(row["score"])+"/85  —  $"+str(live_price)
+                with st.expander(label):
+                    st.markdown("<span style=\'background:"+col+";padding:2px 10px;border-radius:12px;color:white;font-size:12px\'>"+ind.get("industry","Other")+"</span>", unsafe_allow_html=True)
+                    st.write("")
+                    for reason in str(row.get("reasons","")).split(" | "):
+                        st.write("• "+reason)
+        except FileNotFoundError:
+            st.warning("Run score_stocks.py first")
+    else:
+        try:
+            gscores = pd.read_csv("data/growth_scores.csv")
+            for _, row in gscores.iterrows():
+                t    = row["ticker"]
+                ind  = industries.get(t, {})
+                col  = ind.get("color", "#95A5A6")
+                icon = "🚀" if row["growth_rating"]=="HIGH GROWTH" else "📈" if row["growth_rating"]=="GROWTH" else "🌱" if row["growth_rating"]=="EMERGING" else "🐢"
+                live_price = get_current_price(t) or row["price"]
+                label = icon+" "+t+"  —  "+row["growth_rating"]+"  —  Score: "+str(row["growth_score"])+"/100  —  $"+str(live_price)
+                with st.expander(label):
+                    st.markdown("<span style=\'background:"+col+";padding:2px 10px;border-radius:12px;color:white;font-size:12px\'>"+ind.get("industry","Other")+"</span>", unsafe_allow_html=True)
+                    st.write("")
+                    for reason in str(row.get("growth_reasons","")).split(" | "):
+                        st.write("• "+reason)
+        except FileNotFoundError:
+            st.warning("Run scripts/growth_score.py first")
 
 with tab3:
     industries = load_json(INDUSTRIES_FILE, {})
@@ -415,7 +437,7 @@ if st.session_state.get("fetching"):
                 t    = row["ticker"]
                 icon = "🟢" if row["rating"]=="STRONG BUY" else "🟡"
                 tag  = " - Owned" if t in owned else ""
-                pv   = row.get("price_x", row.get("price",""))
+                pv   = get_current_price(t) or row.get("price_x", row.get("price",""))
                 with st.expander(icon+" "+t+"  —  "+row["rating"]+"  —  Score: "+str(row["score"])+"/85  —  $"+str(pv)+tag):
                     color = row["color"]
                     st.markdown("<span style=\'background:"+color+";padding:2px 10px;border-radius:12px;color:white;font-size:12px\'>"+row["industry"]+"</span>", unsafe_allow_html=True)
@@ -439,24 +461,186 @@ with tab4:
     try:
         ratios = pd.read_csv("data/calculated_ratios.csv")
         ratios["Industry"] = ratios["ticker"].map(lambda t: industries.get(t,{}).get("industry","Other"))
-        st.dataframe(ratios, width="stretch")
+
+        fc1, fc2 = st.columns(2)
+        search_term = fc1.text_input("Search by ticker", placeholder="e.g. AAPL")
+        all_categories = sorted(ratios["Industry"].unique().tolist())
+        selected_categories = fc2.multiselect("Filter by category", all_categories, default=all_categories)
+        ratios = ratios[ratios["Industry"].isin(selected_categories)]
+        if search_term:
+            ratios = ratios[ratios["ticker"].str.contains(search_term.upper(), case=False, na=False)]
+
+
+        live_prices = []
+        week_lows   = []
+        week_highs  = []
+        for tkr in ratios["ticker"]:
+            try:
+                info = yf.Ticker(tkr).info
+                live_prices.append(info.get("currentPrice"))
+                week_lows.append(info.get("fiftyTwoWeekLow"))
+                week_highs.append(info.get("fiftyTwoWeekHigh"))
+            except:
+                live_prices.append(None)
+                week_lows.append(None)
+                week_highs.append(None)
+
+        ratios["price"] = live_prices
+        ratios["52w_low"] = week_lows
+        ratios["52w_high"] = week_highs
+
+        # Keep raw numeric copies for charts before formatting strings
+        raw_pe     = ratios["pe_ratio"].copy()
+        raw_roe    = ratios["roe"].copy()
+        raw_margin = ratios["profit_margin"].copy()
+        raw_growth = ratios["revenue_growth"].copy()
+        raw_ticker = ratios["ticker"].copy()
+
+        cols = list(ratios.columns)
+        cols.remove("52w_low")
+        cols.remove("52w_high")
+        price_idx = cols.index("price")
+        cols.insert(price_idx + 1, "52w_low")
+        cols.insert(price_idx + 2, "52w_high")
+        ratios = ratios[cols]
+
+        def color_pe(val):
+            if pd.isna(val) or val <= 0: return "color: gray"
+            if val < 15: return "color: #2ECC71; font-weight: 600"
+            if val < 25: return "color: #F39C12; font-weight: 600"
+            return "color: #E74C3C; font-weight: 600"
+
+        def color_roe(val):
+            if pd.isna(val): return "color: gray"
+            if val > 0.20: return "color: #2ECC71; font-weight: 600"
+            if val > 0.10: return "color: #F39C12; font-weight: 600"
+            return "color: #E74C3C; font-weight: 600"
+
+        def color_margin(val):
+            if pd.isna(val): return "color: gray"
+            if val > 0.15: return "color: #2ECC71; font-weight: 600"
+            if val > 0.05: return "color: #F39C12; font-weight: 600"
+            return "color: #E74C3C; font-weight: 600"
+
+        def color_de(val):
+            if pd.isna(val): return "color: gray"
+            if val < 0.5: return "color: #2ECC71; font-weight: 600"
+            if val < 1.5: return "color: #F39C12; font-weight: 600"
+            return "color: #E74C3C; font-weight: 600"
+
+        def color_growth(val):
+            if pd.isna(val): return "color: gray"
+            if val > 0.10: return "color: #2ECC71; font-weight: 600"
+            if val > 0: return "color: #F39C12; font-weight: 600"
+            return "color: #E74C3C; font-weight: 600"
+
+        def color_fcf(val):
+            if pd.isna(val): return "color: gray"
+            if val > 0: return "color: #2ECC71; font-weight: 600"
+            return "color: #E74C3C; font-weight: 600"
+
+        def fmt_money(val):
+            if pd.isna(val): return "N/A"
+            val = float(val)
+            if abs(val) >= 1_000_000_000:
+                return "$"+str(round(val/1_000_000_000,2))+"B"
+            if abs(val) >= 1_000_000:
+                return "$"+str(round(val/1_000_000,2))+"M"
+            if abs(val) >= 1_000:
+                return "$"+str(round(val/1_000,1))+"K"
+            return "$"+str(round(val,2))
+
+        def fmt_pct(val):
+            if pd.isna(val): return "N/A"
+            return str(round(float(val)*100,1))+"%"
+
+        def fmt_ratio(val):
+            if pd.isna(val): return "N/A"
+            return str(round(float(val),2))
+
+        if "free_cash_flow" in ratios.columns:
+            ratios["free_cash_flow"] = ratios["free_cash_flow"].apply(fmt_money)
+        if "roe" in ratios.columns:
+            ratios["roe"] = ratios["roe"].apply(fmt_pct)
+        if "profit_margin" in ratios.columns:
+            ratios["profit_margin"] = ratios["profit_margin"].apply(fmt_pct)
+        if "revenue_growth" in ratios.columns:
+            ratios["revenue_growth"] = ratios["revenue_growth"].apply(fmt_pct)
+        if "pe_ratio" in ratios.columns:
+            ratios["pe_ratio"] = ratios["pe_ratio"].apply(fmt_ratio)
+        if "debt_to_equity" in ratios.columns:
+            ratios["debt_to_equity"] = ratios["debt_to_equity"].apply(fmt_ratio)
+        if "eps" in ratios.columns:
+            ratios["eps"] = ratios["eps"].apply(fmt_ratio)
+        if "price" in ratios.columns:
+            ratios["price"] = ratios["price"].apply(lambda v: "$"+str(round(v,2)) if pd.notna(v) else "N/A")
+        if "52w_low" in ratios.columns:
+            ratios["52w_low"] = ratios["52w_low"].apply(lambda v: "$"+str(round(v,2)) if pd.notna(v) else "N/A")
+        if "52w_high" in ratios.columns:
+            ratios["52w_high"] = ratios["52w_high"].apply(lambda v: "$"+str(round(v,2)) if pd.notna(v) else "N/A")
+
+        def color_pe_str(val):
+            if val == "N/A": return "color: gray"
+            v = float(val)
+            if v <= 0: return "color: gray"
+            if v < 15: return "color: #2ECC71; font-weight: 600"
+            if v < 25: return "color: #F39C12; font-weight: 600"
+            return "color: #E74C3C; font-weight: 600"
+
+        def color_pct_str(val, good=15, ok=5):
+            if val == "N/A": return "color: gray"
+            v = float(val.replace("%",""))
+            if v > good: return "color: #2ECC71; font-weight: 600"
+            if v > ok: return "color: #F39C12; font-weight: 600"
+            return "color: #E74C3C; font-weight: 600"
+
+        def color_de_str(val):
+            if val == "N/A": return "color: gray"
+            v = float(val)
+            if v < 0.5: return "color: #2ECC71; font-weight: 600"
+            if v < 1.5: return "color: #F39C12; font-weight: 600"
+            return "color: #E74C3C; font-weight: 600"
+
+        def color_fcf_str(val):
+            if val == "N/A": return "color: gray"
+            if val.startswith("$-"): return "color: #E74C3C; font-weight: 600"
+            return "color: #2ECC71; font-weight: 600"
+
+        styled = ratios.style
+        if "pe_ratio" in ratios.columns:
+            styled = styled.map(color_pe_str, subset=["pe_ratio"])
+        if "roe" in ratios.columns:
+            styled = styled.map(lambda v: color_pct_str(v, 20, 10), subset=["roe"])
+        if "profit_margin" in ratios.columns:
+            styled = styled.map(lambda v: color_pct_str(v, 15, 5), subset=["profit_margin"])
+        if "debt_to_equity" in ratios.columns:
+            styled = styled.map(color_de_str, subset=["debt_to_equity"])
+        if "revenue_growth" in ratios.columns:
+            styled = styled.map(lambda v: color_pct_str(v, 10, 0), subset=["revenue_growth"])
+        if "free_cash_flow" in ratios.columns:
+            styled = styled.map(color_fcf_str, subset=["free_cash_flow"])
+
+        st.dataframe(styled, width="stretch")
+
+        chart_df = pd.DataFrame({"ticker": raw_ticker, "pe_ratio": raw_pe, "roe": raw_roe, "profit_margin": raw_margin, "revenue_growth": raw_growth})
+
         c1,c2 = st.columns(2)
         with c1:
             st.subheader("P/E Ratio")
-            pe = ratios[ratios["pe_ratio"]>0].sort_values("pe_ratio")
+            pe = chart_df[chart_df["pe_ratio"]>0].sort_values("pe_ratio")
             st.bar_chart(pe.set_index("ticker")["pe_ratio"])
         with c2:
             st.subheader("Return on Equity")
-            roe = ratios[ratios["roe"].notna()].sort_values("roe",ascending=False)
+            roe = chart_df[chart_df["roe"].notna()].sort_values("roe",ascending=False)
             st.bar_chart(roe.set_index("ticker")["roe"])
         c3,c4 = st.columns(2)
         with c3:
             st.subheader("Profit Margin")
-            pm = ratios[ratios["profit_margin"].notna()].sort_values("profit_margin",ascending=False)
+            pm = chart_df[chart_df["profit_margin"].notna()].sort_values("profit_margin",ascending=False)
             st.bar_chart(pm.set_index("ticker")["profit_margin"])
         with c4:
             st.subheader("Revenue Growth")
-            rg = ratios[ratios["revenue_growth"].notna()].sort_values("revenue_growth",ascending=False)
+            rg = chart_df[chart_df["revenue_growth"].notna()].sort_values("revenue_growth",ascending=False)
             st.bar_chart(rg.set_index("ticker")["revenue_growth"])
     except FileNotFoundError:
         st.warning("Run calculate_ratios.py first")

@@ -1,48 +1,38 @@
 name: Daily Stock Update
-
 on:
   schedule:
-    - cron: '0 13 * * 1-5'   # 9am EST (weekdays)
-    - cron: '0 23 * * 1-5'   # 7pm EST (weekdays)
-  workflow_dispatch:           # lets you run it manually anytime
-
+    - cron: '0 13 * * 1-5'
+    - cron: '0 23 * * 1-5'
+  workflow_dispatch:
 jobs:
   update:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v3
-
+      - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
       - name: Install dependencies
         run: pip install -r requirements.txt
-
       - name: Fetch financials
         run: python scripts/fetch_financials.py
-
       - name: Risk signals
         run: python scripts/risk_signals.py
-
       - name: Calculate ratios
         run: python scripts/calculate_ratios.py
-
       - name: Score stocks
         run: python scripts/score_stocks.py
-
       - name: Compare ratios
         run: python scripts/compare_ratios.py
-
       - name: Run screener
         run: python scripts/screener.py
-
       - name: Commit updated data
         run: |
-          git config user.name "g          git config user.name "g          git config usgithub.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/
-          git commit -m "Auto update $(date +'%Y-%m-%d %H:%M')" || echo "No changes"
+          git commit -m "Auto update" || echo "No changes"
           git push
