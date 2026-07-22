@@ -11,10 +11,10 @@ End Cash Position,9893000000.0,8695000000.0,9346000000.0,9357000000.0,
 Beginning Cash Position,8695000000.0,9346000000.0,9357000000.0,10270000000.0,
 Effect Of Exchange Rate Changes,9000000.0,-1000000.0,0.0,-1000000.0,
 Changes In Cash,1189000000.0,-650000000.0,-11000000.0,-912000000.0,
-Financing Cash Flow,-590000000.0,-345000000.0,-610000000.0,0.0,
+Financing Cash Flow,,-345000000.0,-610000000.0,0.0,5203000000.0
 Cash Flow From Continuing Financing Activities,-590000000.0,-345000000.0,-610000000.0,0.0,
 Net Other Financing Charges,-443000000.0,-253000000.0,-21000000.0,-22000000.0,
-Proceeds From Stock Option Exercised,38000000.0,34000000.0,19000000.0,22000000.0,
+Proceeds From Stock Option Exercised,,34000000.0,19000000.0,22000000.0,21000000.0
 Net Preferred Stock Issuance,,,,0.0,0.0
 Preferred Stock Issuance,,,,0.0,0.0
 Net Common Stock Issuance,-653000000.0,-257000000.0,-608000000.0,0.0,
@@ -61,7 +61,7 @@ Depreciation Amortization Depletion,86000000.0,77000000.0,71000000.0,61000000.0,
 Depreciation And Amortization,86000000.0,77000000.0,71000000.0,61000000.0,
 Amortization Cash Flow,72000000.0,63000000.0,55000000.0,35000000.0,
 Amortization Of Intangibles,72000000.0,63000000.0,55000000.0,35000000.0,
-Depreciation,14000000.0,14000000.0,16000000.0,26000000.0,
+Depreciation,,14000000.0,16000000.0,26000000.0,
 Operating Gains Losses,,,,,2045657000.0
 Gain Loss On Investment Securities,,,,,2045657000.0
 Net Income From Continuing Operations,1883000000.0,1411000000.0,-541000000.0,-1028000000.0,
