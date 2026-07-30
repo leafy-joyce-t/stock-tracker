@@ -18,7 +18,7 @@ Proceeds From Stock Option Exercised,33168000.0,-59062000.0,1145000.0,2610000.0,
 Cash Dividends Paid,0.0,-16503000.0,-40425000.0,-40425000.0,
 Preferred Stock Dividend Paid,0.0,-16503000.0,-40425000.0,-40425000.0,
 Net Preferred Stock Issuance,0.0,-323400000.0,0.0,0.0,
-Preferred Stock Payments,0.0,-323400000.0,0.0,0.0,
+Preferred Stock Payments,,-323400000.0,0.0,0.0,-40426000.0
 Preferred Stock Issuance,,,,,0.0
 Net Common Stock Issuance,3185618000.0,0.0,0.0,0.0,
 Common Stock Payments,,,0.0,0.0,-283385000.0
