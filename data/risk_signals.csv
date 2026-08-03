@@ -1,22 +1,22 @@
 ticker,penalty,boost,risk_flags,bonus_flags,net
-NKE,26,8,"['Down in 3 months (-8)', 'Down in 6 months (-10)', 'Revenue declining (-8)']",['Near 52-week low (+8)'],-18
-LMND,24,8,"['Down in 3 months (-8)', 'Down in 6 months (-10)', 'Elevated short interest (-6)']",['Near 52-week low (+8)'],-16
-MSFT,5,5,['Low insider ownership (-5)'],['Low short interest (+5)'],0
-AWK,10,0,"['Low insider ownership (-5)', 'PEG stretched (-5)']",[],-10
-META,13,23,"['Down in 3 months (-8)', 'Low insider ownership (-5)']","['Low short interest (+5)', 'PEG undervalued vs growth (+10)', 'Near 52-week low (+8)']",10
-AMP,13,8,"['Low insider ownership (-5)', 'Near 52-week high (-8)']",['Up in 3 months (+8)'],-5
-NVDA,0,15,[],"['Low short interest (+5)', 'PEG undervalued vs growth (+10)']",15
-SOFI,16,18,"['Down in 6 months (-10)', 'Elevated short interest (-6)']","['PEG undervalued vs growth (+10)', 'Near 52-week low (+8)']",2
-RBLX,35,8,"['Down in 3 months (-15)', 'Down in 6 months (-10)', 'PEG overvalued vs growth (-10)']",['Near 52-week low (+8)'],-27
-GOOGL,8,15,['Down in 3 months (-8)'],"['Low short interest (+5)', 'PEG undervalued vs growth (+10)']",7
-NBIS,12,23,['High short interest (-12)'],"['Up in 3 months (+8)', 'Up in 6 months (+5)', 'PEG undervalued vs growth (+10)']",11
-AMGN,10,13,"['Low insider ownership (-5)', 'PEG stretched (-5)']","['Up in 3 months (+8)', 'Low short interest (+5)']",3
-HOOD,10,8,"['Low insider ownership (-5)', 'PEG stretched (-5)']",['Up in 3 months (+8)'],-2
-SNDK,0,5,[],['Up in 6 months (+5)'],5
-JPM,13,5,"['Low insider ownership (-5)', 'Near 52-week high (-8)']",['Low short interest (+5)'],-8
 AAPL,5,5,['PEG stretched (-5)'],['Low short interest (+5)'],0
-MRNA,6,13,['Elevated short interest (-6)'],"['Up in 3 months (+8)', 'Up in 6 months (+5)']",7
-NET,10,13,"['Low insider ownership (-5)', 'PEG stretched (-5)']","['Up in 3 months (+8)', 'Up in 6 months (+5)']",3
-LNT,16,0,"['Elevated short interest (-6)', 'Low insider ownership (-5)', 'PEG stretched (-5)']",[],-16
+LMND,16,0,"['Down in 6 months (-10)', 'Elevated short interest (-6)']",[],-16
+AMP,13,8,"['Low insider ownership (-5)', 'Near 52-week high (-8)']",['Up in 3 months (+8)'],-5
+LYFT,12,18,['High short interest (-12)'],"['Up in 3 months (+8)', 'PEG undervalued vs growth (+10)']",6
+SNDK,0,5,[],['Up in 6 months (+5)'],5
 AME,23,5,"['Low insider ownership (-5)', 'PEG overvalued vs growth (-10)', 'Near 52-week high (-8)']",['Low short interest (+5)'],-18
-LYFT,12,10,['High short interest (-12)'],['PEG undervalued vs growth (+10)'],-2
+JPM,13,13,"['Low insider ownership (-5)', 'Near 52-week high (-8)']","['Up in 3 months (+8)', 'Low short interest (+5)']",0
+SOFI,6,18,['Elevated short interest (-6)'],"['PEG undervalued vs growth (+10)', 'Near 52-week low (+8)']",12
+AMGN,10,13,"['Low insider ownership (-5)', 'PEG stretched (-5)']","['Up in 3 months (+8)', 'Low short interest (+5)']",3
+NET,18,13,"['Low insider ownership (-5)', 'PEG stretched (-5)', 'Near 52-week high (-8)']","['Up in 3 months (+8)', 'Up in 6 months (+5)']",-5
+NKE,18,8,"['Down in 6 months (-10)', 'Revenue declining (-8)']",['Near 52-week low (+8)'],-10
+RBLX,35,8,"['Down in 3 months (-15)', 'Down in 6 months (-10)', 'PEG overvalued vs growth (-10)']",['Near 52-week low (+8)'],-27
+META,5,15,['Low insider ownership (-5)'],"['Low short interest (+5)', 'PEG undervalued vs growth (+10)']",10
+GOOGL,0,15,[],"['Low short interest (+5)', 'PEG undervalued vs growth (+10)']",15
+NVDA,0,15,[],"['Low short interest (+5)', 'PEG undervalued vs growth (+10)']",15
+NBIS,12,23,['High short interest (-12)'],"['Up in 3 months (+8)', 'Up in 6 months (+5)', 'PEG undervalued vs growth (+10)']",11
+HOOD,10,8,"['Low insider ownership (-5)', 'PEG stretched (-5)']",['Up in 3 months (+8)'],-2
+AWK,10,0,"['Low insider ownership (-5)', 'PEG stretched (-5)']",[],-10
+MSFT,5,13,['Low insider ownership (-5)'],"['Up in 3 months (+8)', 'Low short interest (+5)']",8
+LNT,16,0,"['Elevated short interest (-6)', 'Low insider ownership (-5)', 'PEG stretched (-5)']",[],-16
+MRNA,6,13,['Elevated short interest (-6)'],"['Up in 3 months (+8)', 'Up in 6 months (+5)']",7
