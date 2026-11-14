@@ -1,22 +1,22 @@
 ticker,penalty,boost,risk_flags,bonus_flags,net
-HOOD,13,8,"['Down in 3 months (-8)', 'Low insider ownership (-5)']",['Near 52-week low (+8)'],-5
-MSFT,5,10,['Low insider ownership (-5)'],"['Up in 6 months (+5)', 'Low short interest (+5)']",5
-NET,10,10,"['Low insider ownership (-5)', 'PEG stretched (-5)']","['Up in 6 months (+5)', 'Low short interest (+5)']",0
-GOOGL,18,13,"['Down in 3 months (-8)', 'Down in 6 months (-10)']","['Low short interest (+5)', 'Near 52-week low (+8)']",-5
-LNT,16,0,"['Elevated short interest (-6)', 'Low insider ownership (-5)', 'PEG stretched (-5)']",[],-16
-LMND,14,8,"['Down in 3 months (-8)', 'Elevated short interest (-6)']",['Near 52-week low (+8)'],-6
-SOFI,14,18,"['Down in 3 months (-8)', 'Elevated short interest (-6)']","['PEG undervalued vs growth (+10)', 'Near 52-week low (+8)']",4
 JPM,5,5,['Low insider ownership (-5)'],['Low short interest (+5)'],0
-AMGN,10,10,"['Low insider ownership (-5)', 'PEG stretched (-5)']","['Up in 6 months (+5)', 'Low short interest (+5)']",0
-LYFT,12,10,['High short interest (-12)'],['PEG undervalued vs growth (+10)'],-2
-AWK,16,0,"['Elevated short interest (-6)', 'Low insider ownership (-5)', 'PEG stretched (-5)']",[],-16
-RBLX,10,13,['PEG overvalued vs growth (-10)'],"['Up in 3 months (+8)', 'Low short interest (+5)']",3
-AME,10,5,"['Low insider ownership (-5)', 'PEG stretched (-5)']",['Low short interest (+5)'],-5
-AAPL,13,13,"['PEG stretched (-5)', 'Near 52-week high (-8)']","['Up in 3 months (+8)', 'Low short interest (+5)']",0
-NKE,25,8,"['Revenue and earnings shrinking (-15)', 'PEG overvalued vs growth (-10)']",['Near 52-week low (+8)'],-17
-MRNA,0,13,[],"['Up in 3 months (+8)', 'Up in 6 months (+5)']",13
-NBIS,37,18,"['Down in 3 months (-15)', 'Down in 6 months (-10)', 'High short interest (-12)']","['PEG undervalued vs growth (+10)', 'Near 52-week low (+8)']",-19
-META,5,18,['Low insider ownership (-5)'],"['Up in 3 months (+8)', 'PEG undervalued vs growth (+10)']",13
-SNDK,25,0,"['Down in 3 months (-15)', 'Down in 6 months (-10)']",[],-25
-NVDA,25,23,"['Down in 3 months (-15)', 'Down in 6 months (-10)']","['Low short interest (+5)', 'PEG undervalued vs growth (+10)', 'Near 52-week low (+8)']",-2
+MSFT,5,10,['Low insider ownership (-5)'],"['Up in 6 months (+5)', 'Low short interest (+5)']",5
 AMP,13,0,"['Down in 3 months (-8)', 'Low insider ownership (-5)']",[],-13
+AMGN,10,10,"['Low insider ownership (-5)', 'PEG stretched (-5)']","['Up in 6 months (+5)', 'Low short interest (+5)']",0
+LMND,14,8,"['Down in 3 months (-8)', 'Elevated short interest (-6)']",['Near 52-week low (+8)'],-6
+AME,10,5,"['Low insider ownership (-5)', 'PEG stretched (-5)']",['Low short interest (+5)'],-5
+NBIS,37,18,"['Down in 3 months (-15)', 'Down in 6 months (-10)', 'High short interest (-12)']","['PEG undervalued vs growth (+10)', 'Near 52-week low (+8)']",-19
+NKE,25,8,"['Revenue and earnings shrinking (-15)', 'PEG overvalued vs growth (-10)']",['Near 52-week low (+8)'],-17
+LNT,16,0,"['Elevated short interest (-6)', 'Low insider ownership (-5)', 'PEG stretched (-5)']",[],-16
+AAPL,13,13,"['PEG stretched (-5)', 'Near 52-week high (-8)']","['Up in 3 months (+8)', 'Low short interest (+5)']",0
+NVDA,25,23,"['Down in 3 months (-15)', 'Down in 6 months (-10)']","['Low short interest (+5)', 'PEG undervalued vs growth (+10)', 'Near 52-week low (+8)']",-2
+META,5,18,['Low insider ownership (-5)'],"['Up in 3 months (+8)', 'PEG undervalued vs growth (+10)']",13
+HOOD,13,8,"['Down in 3 months (-8)', 'Low insider ownership (-5)']",['Near 52-week low (+8)'],-5
+MRNA,0,13,[],"['Up in 3 months (+8)', 'Up in 6 months (+5)']",13
+LYFT,12,15,['High short interest (-12)'],"['Up in 6 months (+5)', 'PEG undervalued vs growth (+10)']",3
+RBLX,10,13,['PEG overvalued vs growth (-10)'],"['Up in 3 months (+8)', 'Low short interest (+5)']",3
+AWK,16,0,"['Elevated short interest (-6)', 'Low insider ownership (-5)', 'PEG stretched (-5)']",[],-16
+GOOGL,18,13,"['Down in 3 months (-8)', 'Down in 6 months (-10)']","['Low short interest (+5)', 'Near 52-week low (+8)']",-5
+NET,10,10,"['Low insider ownership (-5)', 'PEG stretched (-5)']","['Up in 6 months (+5)', 'Low short interest (+5)']",0
+SOFI,14,18,"['Down in 3 months (-8)', 'Elevated short interest (-6)']","['PEG undervalued vs growth (+10)', 'Near 52-week low (+8)']",4
+SNDK,25,0,"['Down in 3 months (-15)', 'Down in 6 months (-10)']",[],-25
